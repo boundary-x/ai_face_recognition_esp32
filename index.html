@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>바운더리엑스 AI 웹앱서비스 - AI 얼굴인식</title>
+  <title>바운더리엑스 AI 웹앱서비스 - AI 얼굴인식 (ESP32)</title>
   
   <link rel="icon" href="https://raw.githubusercontent.com/boundary-x/ai_teachable_machine/refs/heads/main/Favicon.png"/> 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
@@ -37,7 +37,7 @@
         <h3 data-lang="h_monitor">🖥️ 전송 데이터 확인</h3>
         <div class="data-info-box">
           <p class="info-title" data-lang="info_title">📢 전송 데이터 안내</p>
-          <p class="info-desc" data-lang="info_desc">마이크로비트로 전송되는 <strong>19자리 숫자 데이터</strong>입니다.<br>(전송 속도: 10회/초)</p>
+          <p class="info-desc" data-lang="info_desc">ESP32로 전송되는 <strong>19자리 숫자 데이터</strong>입니다.<br>(전송 속도: 10회/초)</p>
           <div class="info-tags">
             <span><strong>X,Y,Z</strong> : 위치</span>
             <span><strong>Yaw,Pitch,Roll</strong> : 회전</span>
@@ -55,7 +55,7 @@
 
       <div class="control-group">
         <h3 data-lang="h_conn">2. 기기 연결</h3>
-        <p data-lang="desc_conn">블루투스 버튼을 눌러 마이크로비트와 연결하세요.</p>
+        <p data-lang="desc_conn">블루투스 버튼을 눌러 ESP32와 연결하세요.</p>
         <div id="bluetoothStatus" data-lang="status_wait">상태: 연결 대기 중</div>
         <div id="bluetooth-control-buttons" class="button-group" style="margin-top: 1rem;"></div>
       </div>
@@ -168,4 +168,3 @@
   <script type="module" src="sketch.js"></script>
 </body>
 </html>
-
