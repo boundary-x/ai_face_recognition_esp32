@@ -1,6 +1,6 @@
 /*
  * sketch.js
- * Boundary X - Face Recognition (Final Version)
+ * Boundary X - Face Recognition (ESP32 Version - TX Fixed)
  * Features: Face Mesh (Black/Thin), Correct Roll/Eye Logic, Multi-language, Stop Command
  */
 
@@ -15,14 +15,16 @@ const textData = {
     // Monitors
     h_monitor: "🖥️ 전송 데이터 확인",
     info_title: "📢 전송 데이터 안내",
-    info_desc: "마이크로비트로 전송되는 <strong>19자리 숫자 데이터</strong>입니다.<br>(전송 속도: 10회/초)",
+    // [텍스트 수정] ESP32로 변경
+    info_desc: "ESP32로 전송되는 <strong>19자리 숫자 데이터</strong>입니다.<br>(전송 속도: 10회/초)",
     
     // Cards with Numbers
     h_cam: "1. 카메라 설정",
     desc_cam: "카메라 버튼을 통해 화면을 설정해주세요.",
     
     h_conn: "2. 기기 연결",
-    desc_conn: "블루투스 버튼을 눌러 마이크로비트와 연결하세요.",
+    // [텍스트 수정] ESP32로 변경
+    desc_conn: "블루투스 버튼을 눌러 ESP32와 연결하세요.",
     
     h_data: "3. 실시간 데이터 확인",
     desc_data: "얼굴 움직임과 표정이 아래 데이터로 변환됩니다.",
@@ -71,13 +73,15 @@ const textData = {
     
     h_monitor: "🖥️ Packet Monitor",
     info_title: "📢 Data Packet Info",
-    info_desc: "<strong>19-digit numeric data</strong> sent to Micro:bit.<br>(Rate: 10 times/sec)",
+    // [텍스트 수정] ESP32로 변경
+    info_desc: "<strong>19-digit numeric data</strong> sent to ESP32.<br>(Rate: 10 times/sec)",
     
     h_cam: "1. Camera Settings",
     desc_cam: "Configure your camera view.",
     
     h_conn: "2. Connection",
-    desc_conn: "Pair with Micro:bit via Bluetooth.",
+    // [텍스트 수정] ESP32로 변경
+    desc_conn: "Pair with ESP32 via Bluetooth.",
     
     h_data: "3. Real-time Data",
     desc_data: "Face movements converted to parameters.",
@@ -124,12 +128,12 @@ let currentLang = 'ko';
 
 // --- Bluetooth UUIDs ---
 const UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-const UART_TX_CHARACTERISTIC_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-const UART_RX_CHARACTERISTIC_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+const UART_TX_CHARACTERISTIC_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e"; // 쓰기(Write) 통로
+const UART_RX_CHARACTERISTIC_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e"; 
 
 // --- Variables ---
 let bluetoothDevice = null;
-let rxCharacteristic = null;
+let rxCharacteristic = null; // 실제로는 TX 권한을 부여받아 전송에 사용됩니다.
 let isConnected = false;
 let isSendingData = false;
 let lastSentTime = 0; 
@@ -447,12 +451,16 @@ function switchCamera() {
 async function connectBluetooth() {
   try {
     bluetoothDevice = await navigator.bluetooth.requestDevice({
-      filters: [{ namePrefix: "BBC micro:bit" }],
+      // [수정 핵심] 기기 이름 필터를 ESP로 설정
+      filters: [{ namePrefix: "ESP" }],
       optionalServices: [UART_SERVICE_UUID]
     });
     const server = await bluetoothDevice.gatt.connect();
     const service = await server.getPrimaryService(UART_SERVICE_UUID);
-    rxCharacteristic = await service.getCharacteristic(UART_RX_CHARACTERISTIC_UUID);
+    
+    // [수정 핵심] RX가 아닌 TX 채널(0002)을 가져와서 쓰기 권한 확보
+    rxCharacteristic = await service.getCharacteristic(UART_TX_CHARACTERISTIC_UUID);
+    
     isConnected = true;
     const t = textData[currentLang];
     select('#bluetoothStatus').html(t.status_connected + bluetoothDevice.name).addClass('status-connected');
@@ -472,4 +480,3 @@ function disconnectBluetooth() {
 
 window.setup = setup;
 window.draw = draw;
-
