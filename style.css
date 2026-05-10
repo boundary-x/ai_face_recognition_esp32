@@ -1,0 +1,201 @@
+/* style.css - Boundary X: Object Detection (Fixed Responsive Header) */
+
+:root {
+  /* Palette */
+  --primary: #000000;       
+  --primary-hover: #333333; 
+  --accent-grey: #F8F9FA;   
+  --border-color: #D1D5DB;  
+  
+  --bg-color: #FFFFFF;      
+  --text-main: #111111;     
+  --text-sub: #666666;      
+  
+  --danger: #EA4335;        
+  --success: #137333;       
+  
+  --label-bg: #000000;
+  --label-text: #FFFFFF;
+  --label-val-color: #00E676; 
+
+  --radius-pill: 50px;      
+  --radius-card: 16px;      
+  
+  --font-family: 'Pretendard', -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font-family); }
+body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* --- Header --- */
+header {
+  background: #000000;
+  border-bottom: 1px solid #333;
+  padding: 1rem 5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: padding 0.3s ease;
+  height: 60px; /* 헤더 높이 고정 (레이아웃 안정성) */
+}
+
+.header-left, .header-right { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+}
+
+.title {
+  font-size: 1.25rem; 
+  font-weight: 700; 
+  color: #FFFFFF;
+  display: flex; 
+  align-items: center; 
+  gap: 10px;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 (필수) */
+}
+
+.title img { 
+  height: 28px; 
+  width: auto; 
+  transition: height 0.3s ease;
+}
+
+.model-badge {
+  background-color: #333333; color: #00E676;
+  font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;
+  font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+  border: 1px solid #555; display: inline-block;
+  white-space: nowrap;
+}
+
+.back-button {
+  text-decoration: none; color: #FFFFFF; border: 1px solid #FFFFFF;
+  font-size: 0.9rem; font-weight: 500; padding: 0.4rem 1rem;
+  border-radius: var(--radius-pill); transition: all 0.2s; white-space: nowrap;
+}
+.back-button:hover { background: #FFFFFF; color: #000000; }
+
+.lang-toggle {
+    background: transparent; color: #888; border: 1px solid #555;
+    padding: 0.4rem 0.8rem; border-radius: var(--radius-pill);
+    font-size: 0.8rem; font-weight: 700; cursor: pointer; min-width: auto;
+    transition: all 0.2s; white-space: nowrap;
+}
+.lang-toggle:hover { color: #FFF; border-color: #FFF; }
+
+/* --- Main Layout --- */
+main { width: 100%; max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2rem; }
+.canvas-container { width: 100%; max-width: 400px; aspect-ratio: 4/3; border-radius: var(--radius-card); overflow: hidden; background: #000; box-shadow: 0 4px 20px rgba(0,0,0,0.1); position: relative; flex-shrink: 0; }
+canvas { display: block; width: 100% !important; height: 100% !important; object-fit: contain; }
+
+/* Controls */
+.controls { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 24px; }
+.control-group { background: var(--accent-grey); padding: 1.5rem; border-radius: var(--radius-card); border: 1px solid var(--border-color); }
+.control-group h3 { background: transparent; color: #000000; border-left: 6px solid #000000; padding-left: 1rem; font-size: 1.2rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.1; display: flex; align-items: center; }
+.control-group p { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 1rem; }
+
+/* Info Box */
+.data-info-box { background-color: #FFFFFF; border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; margin-bottom: 1rem; }
+.info-title { font-size: 1rem !important; color: #333 !important; margin-bottom: 0.5rem !important; font-weight: 700; }
+.info-desc { font-size: 0.9rem !important; color: #666 !important; margin-bottom: 1rem !important; line-height: 1.4; }
+.info-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.info-tags span { background: #F1F3F4; color: #333; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; }
+
+/* Buttons */
+.button-group { display: flex; gap: 10px; flex-wrap: wrap; }
+button { cursor: pointer; border: none; font-size: 0.9rem; font-weight: 600; padding: 0.8rem 1.2rem; border-radius: var(--radius-pill); transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; flex: 1; min-width: 120px; }
+.start-button { background-color: var(--primary); color: white; }
+.start-button:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+.stop-button { background-color: white; color: var(--danger); border: 1px solid var(--border-color); }
+.stop-button:hover { background-color: #FFF5F5; border-color: var(--danger); }
+
+/* Status & Display */
+#bluetoothStatus { margin-top: 0.5rem; padding: 0.8rem; border-radius: 8px; font-size: 0.95rem; text-align: center; font-weight: 700; background-color: #F1F3F4; color: #333; border: 1px solid var(--border-color); }
+.status-connected { background-color: #E6F4EA !important; color: var(--success) !important; border-color: var(--success) !important; }
+.status-error { background-color: #FCE8E6 !important; color: var(--danger) !important; border-color: var(--danger) !important; }
+.data-display { font-family: monospace; background: #000; color: #0f0; padding: 1rem; border-radius: 8px; font-size: 1.1rem; letter-spacing: 1px; text-align: center; font-weight: 700; white-space: nowrap; overflow-x: auto; }
+
+/* Labels */
+.param-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.param-label { background-color: var(--label-bg); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
+.param-label:hover { transform: translateY(-2px); }
+.p-header { display: flex; justify-content: space-between; align-items: center; }
+.p-name { color: #AAAAAA; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+.p-val { color: var(--label-val-color); font-family: monospace; font-size: 1.1rem; font-weight: 700; }
+.p-bar-bg { width: 100%; height: 4px; background-color: #333333; border-radius: 2px; overflow: hidden; }
+.p-bar-fill { height: 100%; background-color: var(--label-val-color); width: 0%; transition: width 0.1s linear; }
+.param-label.accent .p-val { color: #40C4FF; } 
+.param-label.accent .p-bar-fill { background-color: #40C4FF; }
+.param-label.status .p-val { color: #FFD600; }
+.param-label.status .p-bar-fill { background-color: #FFD600; }
+
+/* Footer */
+footer { background-color: #000000; color: #FFFFFF; padding: 4rem 5vw 4rem; border-top: 1px solid #222; margin-top: auto; font-size: 0.9rem; }
+.footer-container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; }
+.footer-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4rem; }
+.footer-info { flex: 1; min-width: 280px; display: flex; flex-direction: column; }
+.footer-logo { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; color: #FFFFFF; }
+.slogan { font-size: 0.95rem; color: #CCCCCC; font-weight: 400; margin-bottom: 1.5rem; line-height: 1.5; word-break: keep-all; }
+address { font-style: normal; color: #888; line-height: 1.6; }
+.copyright { margin-top: 0.8rem; font-size: 0.8rem; color: #666; }
+.footer-links { display: flex; gap: 4rem; flex-wrap: wrap; }
+.link-column h4 { font-size: 0.95rem; font-weight: 700; color: #FFFFFF; margin-bottom: 1.2rem; }
+.link-column ul { list-style: none; padding: 0; }
+.link-column li { margin-bottom: 1.2rem; display: flex; flex-direction: column; gap: 4px; }
+.link-column a { text-decoration: none; color: #CCCCCC; font-weight: 500; transition: color 0.2s; }
+.link-column a:hover { color: #FFFFFF; text-decoration: underline; text-underline-offset: 4px; }
+.link-desc { font-size: 0.8rem; color: #666; }
+
+/* --- RESPONSIVE LAYOUT (Mobile Optimization) --- */
+
+/* 1. PC & Tablet */
+@media (min-width: 768px) {
+  main { flex-direction: row; align-items: flex-start; justify-content: center; gap: 3rem; }
+  .canvas-container { position: sticky; top: 2rem; width: 400px; }
+  .controls { flex: 1; }
+}
+
+/* 2. Mobile Portrait (세로 모드) */
+@media (max-width: 767px) {
+  /* 헤더 강제 축소 */
+  header { padding: 0.5rem 0.8rem; height: 50px; }
+  .header-left { gap: 6px; }
+  .header-right { gap: 6px; }
+
+  /* 로고 및 텍스트 강제 축소 */
+  .title { font-size: 0.85rem; gap: 4px; }
+  .title img { height: 18px !important; } /* 로고 높이 강제 조정 */
+  
+  /* 배지 및 버튼 축소 */
+  .model-badge { font-size: 0.6rem; padding: 2px 6px; }
+  .back-button { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+  .lang-toggle { font-size: 0.7rem; padding: 0.3rem 0.5rem; }
+
+  /* 본문 레이아웃 */
+  .param-grid { grid-template-columns: repeat(2, 1fr); }
+  main { padding: 1rem; gap: 1rem; }
+  
+  .canvas-container { 
+    position: sticky; top: 55px; z-index: 90; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); width: 100%; margin-bottom: 0.5rem; 
+  }
+  .control-group { padding: 1.2rem; }
+  .button-group { flex-direction: column; }
+  button { width: 100%; }
+  
+  .footer-top { flex-direction: column; gap: 3rem; }
+  .footer-links { gap: 2.5rem; flex-direction: column; }
+}
+
+/* 3. Mobile Landscape (가로 모드) */
+@media (max-width: 900px) and (orientation: landscape) {
+  header { padding: 0.4rem 1rem; height: 50px; }
+  main { flex-direction: row; align-items: flex-start; padding: 1rem; gap: 1.5rem; }
+  .canvas-container { position: sticky; top: 60px; z-index: 90; width: 45%; min-width: 300px; }
+  .controls { flex: 1; }
+  footer { display: none; }
+}
